@@ -1,0 +1,110 @@
+es. 1
+SELECT count(*) as ConteggioVerbaliTrascritti
+  FROM [Polizia Municipale].[dbo].[VERBALE]
+
+
+es. 2
+SELECT an.Cognome, an.Nome, count(ver.IDVerbale) as TotaleVerbali
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  group by an.Cognome, an.Nome
+
+
+es.3
+SELECT vio.IDViolazione, count(ver.IDVerbale) as TotaleVerbaliPerViolazione
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  group by vio.IDViolazione
+
+
+es.4
+SELECT an.IdAnagrafica, sum(ver.DecurtamentoPunti) as TotalePuntiDecurtati
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  group by an.IdAnagrafica
+
+
+es.5
+SELECT an.Cognome, an.Nome, ver.DataViolazione, ver.IndirizzoViolazione, ver.Importo, ver.DecurtamentoPunti
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  where an.Citta = 'Palermo'
+
+
+es.6
+SELECT an.Cognome, an.Nome, an.Indirizzo, ver.DataViolazione, ver.Importo, ver.DecurtamentoPunti
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  where ver.DataViolazione between '01/02/2009' and '31/07/2009'
+
+es.7
+SELECT an.IdAnagrafica, sum(ver.Importo) as TotaleImporti
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  group by an.IdAnagrafica
+
+es.8
+SELECT an.*
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  where an.Citta = 'Palermo'
+
+
+es.9
+SELECT ver.DataViolazione, ver.Importo, ver.DecurtamentoPunti
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  where year(ver.DataViolazione) = '2023'
+
+
+es.10
+SELECT age.CognomeAgente, age.NomeAgente, count(ver.IndirizzoViolazione) as ConteggioViolazioniPerAgente
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  group by age.CognomeAgente, age.NomeAgente
+
+
+es.11
+SELECT an.Cognome, an.Nome, an.Indirizzo, ver.DataViolazione, ver.Importo, ver.DecurtamentoPunti
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  where ver.DecurtamentoPunti > 5
+
+
+es.12
+SELECT an.Cognome, an.Nome, an.Indirizzo, ver.DataViolazione, ver.Importo, ver.DecurtamentoPunti
+  FROM COMUNICAZIONE as com
+  left join ANAGRAFE an on com.IDAnagrafica = an.IdAnagrafica
+  left join VERBALE ver on com.IDVerbale = ver.IDVerbale
+  left join VIOLAZIONE vio on com.IDViolazione = vio.IDViolazione
+  left join AGENTE age on ver.IDAgente = age.IDAgente 
+  where ver.Importo > 400
+
+Provate e funzionano tutte

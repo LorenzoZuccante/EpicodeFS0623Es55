@@ -1,0 +1,65 @@
+es.1
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE spVerbaliAnnuali
+@ANNO varchar(4)
+AS
+
+BEGIN
+
+	SET NOCOUNT ON;
+select * from VERBALE
+where year(DataTrascrizioneVerbale) = @ANNO
+
+END
+GO
+
+
+es.2
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE spTotalePuntiDecurtatiPerDataViolazione
+@DATA datetime
+AS
+
+BEGIN
+
+	SET NOCOUNT ON;
+	select sum(DecurtamentoPunti) as TotalePuntiDecurtati
+	from VERBALE
+	where DataViolazione = @DATA
+END
+GO
+
+
+
+es.3
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[spEliminazioneVerbalePerIdVerbale]
+@IDverb int
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+	delete from COMUNICAZIONE
+	Where IDVerbale = @IDverb
+	
+	delete from VERBALE
+	Where IDVerbale = @IDverb
+	
+END
+GO
+
+Provate e funzionano tutte e 3
